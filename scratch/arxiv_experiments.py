@@ -2,12 +2,45 @@ import time
 import requests
 import feedparser
 
-def test_arxiv_request():
-    search_term = 'prosthetics'
+"""
+    - from https://info.arxiv.org/help/api/user-manual.html#python_simple_example
 
+    - prefixes for fields that can be searched:
+        - ti        Title
+        - au        Author
+        - abs       Abstract
+        - co        Comment
+        - jr        Journal Reference
+        - cat       Subject Category
+        - rn        Report Number
+        - id        Id (use id_list instead)
+        - all       All of the above
+    
+    - date filtering
+        - The API provides one date filter, submittedDate, that allows you to select data 
+          within a given date range of when the data was submitted to arXiv.
+        - The expected format is [YYYYMMDDTTTT+TO+YYYYMMDDTTTT] where TTTT is provided in 
+          24-hour time to the minute, in GMT. 
+        - e.g.: https://export.arxiv.org/api/query?search_query=au:del_maestro+AND+submittedDate:[202301010600+TO+202401010600]
+        - Question: should we incorporate time zones?
+
+    - Boolean operators
+        - AND
+        - OR
+        - ANDNOT - allows filtering of search results based on certain fields
+            - e.g., find all articles by Adrian Del Maestro with titles that don't contain 'checkerboard'
+                    https://export.arxiv.org/api/query?search_query=au:del_maestro+ANDNOT+ti:checkerboard
+    
+    - grouping operators
+        - () - used to group Boolean expressions for Boolean operator precedence
+        - double quotes - used to group multiple words into phrases to search a particular field
+        - space - used to extend a search_query to include multiple fields
+"""
+
+def test_arxiv_request():
     url=r'https://export.arxiv.org/api/query'
     params = {}
-    params |= {'search_query':f'all:{search_term}'}
+    params |= {'search_query':f'ti:prosthetics AND abs:"sensory feedback"'}
     params |= {'start':0}
     params |= {'max_results':10}
     params |= {'sortBy':'submittedDate'} # relevance, lastUpdatedDate, submittedDate
