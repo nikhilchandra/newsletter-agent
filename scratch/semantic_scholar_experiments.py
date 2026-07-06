@@ -48,3 +48,55 @@
         
 
 """
+
+import time
+import requests
+
+REQUEST_RATE = 1 # requests per second - assumes API key
+
+def test_request_paper_title():
+    # given a paper ID, get its title using this basic request
+
+    #https://api.semanticscholar.org/graph/v1/paper/{paper_id}
+    endpoint='https://api.semanticscholar.org/graph/v1/paper'
+    paper_id = '649def34f8be52c8b66281af98ae884c09aef38b'
+    url=f'{endpoint}/{paper_id}'
+    r = requests.get(url)
+    if r.status_code == 429:
+        print('Rate limit exceeded.')
+    elif r.status_code == 503:
+        print('Server is down.')
+    elif r.status_code != 200:
+        print(f'Unexpected status code {r.status_code}')
+    else:
+        print(r.json()) # use .json() function to get result as dict
+    print(type(r.json()))
+    time.sleep(REQUEST_RATE)
+
+def test_request_paper_title_and_additional_fields():
+    # There is only one supported parameter: fields. This parameter takes 
+    # a comma-separated string of field names. This tells the API what 
+    # information to return in the response. Here are the supported fields:
+    # paperId, corpusId, externalIds, url, title
+
+    endpoint='https://api.semanticscholar.org/graph/v1/paper'
+    paper_id = '649def34f8be52c8b66281af98ae884c09aef38b'
+    url=f'{endpoint}/{paper_id}'
+    params = {}
+    params |= {'fields':'paperId,corpusId,externalIds,url,title'}
+    r = requests.get(url=url, params=params)
+    if r.status_code == 429:
+        print('Rate limit exceeded.')
+    elif r.status_code == 503:
+        print('Server is down.')
+    elif r.status_code != 200:
+        print(r'Unexpected status code {r.status_code}')
+    else:
+        print(r.json())
+    print(type(r.json()))
+    time.sleep(REQUEST_RATE)
+
+
+if __name__ == "__main__":
+    # test_request_paper_title()
+    test_request_paper_title_and_additional_fields()
