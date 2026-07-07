@@ -29,22 +29,22 @@
             - /graph/v1/paper/{paper_id}/citations
             - /graph/v1/paper/{paper_id}/references
         
-        - Example requests are here
-            - https://api.semanticscholar.org/api-docs/graph
-        
-        - General principles
-            - Use API key - 1 request per second
-            - Use batch end points - Some endpoints have corresponding batch
-                or bulk endpoints that return more results in a single response.
-                E.g., paper relevance search (bulk version: paper bulk search), 
-                paper details endpoint (batch version: paper batch endpoint).
-            - Limit 'field' parameters - Most endpoints contain 'fields' query 
-                parameter that specifies which data is returned in the response.
-                It is good practice to avoid including unneeded fields to speed
-                up the response rate.
-            - Dataset Download - when you need a request rate that is faster than
-                that supported by the API key, you can download SS's dataset and
-                run your queries locally.
+    - Example requests are here
+        - https://api.semanticscholar.org/api-docs/graph
+    
+    - General principles
+        - Use API key - 1 request per second
+        - Use batch end points - Some endpoints have corresponding batch
+            or bulk endpoints that return more results in a single response.
+            E.g., paper relevance search (bulk version: paper bulk search), 
+            paper details endpoint (batch version: paper batch endpoint).
+        - Limit 'field' parameters - Most endpoints contain 'fields' query 
+            parameter that specifies which data is returned in the response.
+            It is good practice to avoid including unneeded fields to speed
+            up the response rate.
+        - Dataset Download - when you need a request rate that is faster than
+            that supported by the API key, you can download SS's dataset and
+            run your queries locally.
         
 
 """
