@@ -51,8 +51,13 @@
 
 import time
 import requests
+import os
+from dotenv import load_dotenv
 
 REQUEST_RATE = 1 # requests per second - assumes API key
+
+load_dotenv()
+SEMANTIC_SCHOLAR_API_KEY = os.environ.get("SEMANTIC_SCHOLAR_API_KEY")
 
 def test_request_paper_title():
     # given a paper ID, get its title using this basic request
@@ -61,7 +66,8 @@ def test_request_paper_title():
     endpoint='https://api.semanticscholar.org/graph/v1/paper'
     paper_id = '649def34f8be52c8b66281af98ae884c09aef38b'
     url=f'{endpoint}/{paper_id}'
-    r = requests.get(url)
+    headers={'x-api-key':SEMANTIC_SCHOLAR_API_KEY}
+    r = requests.get(url, headers=headers)
     if r.status_code == 429:
         print('Rate limit exceeded.')
     elif r.status_code == 503:
@@ -82,9 +88,10 @@ def test_request_paper_title_and_additional_fields():
     endpoint='https://api.semanticscholar.org/graph/v1/paper'
     paper_id = '649def34f8be52c8b66281af98ae884c09aef38b'
     url=f'{endpoint}/{paper_id}'
+    headers={'x-api-key':SEMANTIC_SCHOLAR_API_KEY}
     params = {}
     params |= {'fields':'paperId,corpusId,externalIds,url,title'}
-    r = requests.get(url=url, params=params)
+    r = requests.get(url=url, params=params, headers=headers)
     if r.status_code == 429:
         print('Rate limit exceeded.')
     elif r.status_code == 503:
