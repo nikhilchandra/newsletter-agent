@@ -59,7 +59,7 @@ REQUEST_RATE = 1 # requests per second - assumes API key
 load_dotenv()
 SEMANTIC_SCHOLAR_API_KEY = os.environ.get("SEMANTIC_SCHOLAR_API_KEY")
 
-def test_request_paper_title():
+def test_get_paper_title():
     # given a paper ID, get its title using this basic request
 
     #https://api.semanticscholar.org/graph/v1/paper/{paper_id}
@@ -76,10 +76,12 @@ def test_request_paper_title():
         print(f'Unexpected status code {r.status_code}')
     else:
         print(r.json()) # use .json() function to get result as dict
+        # {'paperId': '649def34f8be52c8b66281af98ae884c09aef38b', 'title': 'Construction of the 
+        # Literature Graph in Semantic Scholar'}
     print(type(r.json()))
     time.sleep(REQUEST_RATE)
 
-def test_request_paper_title_and_additional_fields():
+def test_get_paper_details():
     # There is only one supported parameter: fields. This parameter takes 
     # a comma-separated string of field names. This tells the API what 
     # information to return in the response. Here are the supported fields:
@@ -98,12 +100,21 @@ def test_request_paper_title_and_additional_fields():
         print('Server is down.')
     elif r.status_code != 200:
         print(r'Unexpected status code {r.status_code}')
+        # {'paperId': '649def34f8be52c8b66281af98ae884c09aef38b', 
+        # 'externalIds': {'MAG': '2801930304', 'DBLP': 'conf/naacl/AmmarGBBCDDEFHK18', 
+        # 'ACL': 'N18-3011', 'ArXiv': '1805.02262', 
+        # 'DOI': '10.18653/v1/N18-3011', 'CorpusId': 19170988}, 
+        # 'corpusId': 19170988, 
+        # 'url': 'https://www.semanticscholar.org/paper/649def34f8be52c8b66281af98ae884c09aef38b', 
+        # 'title': 'Construction of the Literature Graph in Semantic Scholar'}
     else:
         print(r.json())
+
     print(type(r.json()))
     time.sleep(REQUEST_RATE)
 
+def test_get_
 
 if __name__ == "__main__":
-    # test_request_paper_title()
-    test_request_paper_title_and_additional_fields()
+    test_get_paper_title()
+    test_get_paper_details()
