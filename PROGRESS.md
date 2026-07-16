@@ -26,3 +26,13 @@
 **What's blocking me:** 
 - There are a lot of different sources and each has its own unique
   Rest API. Understanding how each of them works takes time.
+
+## [7/15/2026]
+**What I did:**
+- Tried debugging issues with Semantic Scholar API key
+- Ultimately emailed Semantic Scholar for help with API, still awaiting response
+**What I learned:**
+- I learned about exponential backoff in the context of failed requests to
+  a server
+**What's blocking me:**
+- I should have moved on from Semantic Scholar sooner to another source
